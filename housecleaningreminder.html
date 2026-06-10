@@ -43,6 +43,7 @@
     .nav-links a.active { background: var(--gold); color: var(--text-dark); font-weight: 600; }
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; }
     .hamburger span { display: block; width: 24px; height: 2px; background: var(--text-dark); border-radius: 2px; transition: 0.3s; }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
 
     /* HERO */
     .hero { background: linear-gradient(135deg, #fff9f9 0%, #fff4f0 40%, #fffbe8 100%); padding: 90px 40px 80px; text-align: center; position: relative; overflow: hidden; }
@@ -183,6 +184,37 @@
     .modal-cancel { padding: 10px 24px; border-radius: 50px; border: 1.5px solid var(--pink-mid); background: none; font-family: var(--font-body); font-size: 0.9rem; font-weight: 600; cursor: pointer; color: var(--text-mid); transition: 0.2s; }
     .modal-cancel:hover { background: var(--pink-light); }
 
+    /* NOTIFICATION BELL */
+    .notif-btn { display: inline-flex; align-items: center; gap: 7px; background: var(--pink-light); color: var(--text-dark); font-family: var(--font-body); font-size: 0.82rem; font-weight: 600; padding: 7px 16px; border-radius: 50px; border: 1.5px solid var(--gold); cursor: pointer; transition: var(--transition); position: relative; }
+    .notif-btn:hover { background: var(--gold); transform: translateY(-2px); }
+    .notif-btn.enabled { background: var(--gold); border-color: var(--gold-dark); }
+    .notif-badge { position: absolute; top: -5px; right: -5px; background: #e74c3c; color: #fff; font-size: 0.65rem; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--white); }
+    .notif-badge.hidden { display: none; }
+
+    /* NOTIFICATION PANEL */
+    .notif-panel { position: fixed; top: 78px; right: 20px; width: 340px; max-height: 420px; background: var(--white); border-radius: var(--radius-md); border: 2px solid var(--gold); box-shadow: var(--shadow-md); z-index: 250; overflow: hidden; display: none; flex-direction: column; animation: panelIn 0.25s cubic-bezier(0.34,1.56,0.64,1); }
+    .notif-panel.open { display: flex; }
+    @keyframes panelIn { from { transform: translateY(-12px) scale(0.97); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+    .notif-panel-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1.5px solid var(--pink-mid); background: #fffbe8; }
+    .notif-panel-header h4 { font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: var(--text-dark); }
+    .notif-panel-close { background: none; border: none; cursor: pointer; font-size: 1.1rem; color: var(--text-soft); transition: 0.2s; }
+    .notif-panel-close:hover { color: #c0392b; transform: scale(1.2); }
+    .notif-list { overflow-y: auto; flex: 1; }
+    .notif-item { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-bottom: 1px solid var(--pink-light); transition: background 0.2s; }
+    .notif-item:hover { background: #fffbe8; }
+    .notif-item:last-child { border-bottom: none; }
+    .notif-item-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+    .notif-item-body { flex: 1; }
+    .notif-item-title { font-size: 0.85rem; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
+    .notif-item-desc { font-size: 0.78rem; color: var(--text-soft); line-height: 1.4; }
+    .notif-item-time { font-size: 0.72rem; color: var(--gold-dark); margin-top: 4px; font-weight: 600; }
+    .notif-item.overdue .notif-item-icon::after { content: ''; }
+    .notif-empty { text-align: center; padding: 32px 20px; color: var(--text-soft); font-size: 0.88rem; }
+    .notif-empty-icon { font-size: 2rem; display: block; margin-bottom: 8px; }
+    .notif-panel-footer { padding: 10px 16px; border-top: 1.5px solid var(--pink-mid); display: flex; justify-content: space-between; gap: 8px; background: #fafafa; }
+    .notif-clear-btn { flex: 1; padding: 7px 10px; background: none; border: 1.5px solid var(--pink-mid); border-radius: var(--radius-sm); font-size: 0.78rem; font-weight: 600; cursor: pointer; color: var(--text-mid); transition: 0.2s; }
+    .notif-clear-btn:hover { background: var(--pink-light); }
+
     /* TOAST */
     .toast-container { position: fixed; bottom: 28px; right: 28px; z-index: 300; display: flex; flex-direction: column; gap: 10px; }
     .toast { background: var(--text-dark); color: var(--white); padding: 14px 20px; border-radius: var(--radius-md); font-size: 0.88rem; font-weight: 500; box-shadow: var(--shadow-md); display: flex; align-items: center; gap: 10px; min-width: 240px; border-left: 4px solid var(--gold); animation: toastIn 0.4s cubic-bezier(0.34,1.56,0.64,1); }
@@ -192,6 +224,23 @@
     @keyframes toastIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     @keyframes toastOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(120px); opacity: 0; } }
     .toast.removing { animation: toastOut 0.35s ease forwards; }
+
+    /* PENDING TASK POPUP */
+    .pending-popup-overlay { display: none; position: fixed; inset: 0; background: rgba(44,26,30,0.6); z-index: 400; backdrop-filter: blur(5px); align-items: center; justify-content: center; }
+    .pending-popup-overlay.open { display: flex; }
+    .pending-popup { background: var(--white); border-radius: var(--radius-lg); padding: 36px 32px; max-width: 420px; width: 90%; box-shadow: 0 24px 80px rgba(44,26,30,0.35); position: relative; text-align: center; animation: modalIn 0.4s cubic-bezier(0.34,1.56,0.64,1); border-top: 5px solid var(--gold); }
+    .pending-popup-bell { font-size: 3rem; margin-bottom: 14px; display: block; animation: bellRing 0.6s ease-in-out 3; }
+    @keyframes bellRing { 0%,100%{transform:rotate(0)} 20%{transform:rotate(-18deg)} 40%{transform:rotate(18deg)} 60%{transform:rotate(-10deg)} 80%{transform:rotate(10deg)} }
+    .pending-popup h3 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
+    .pending-popup-task { font-size: 1rem; font-weight: 600; color: var(--gold-dark); margin-bottom: 6px; }
+    .pending-popup-desc { font-size: 0.875rem; color: var(--text-soft); margin-bottom: 20px; line-height: 1.5; }
+    .pending-popup-time { font-size: 0.8rem; color: var(--text-soft); background: var(--pink-light); padding: 4px 14px; border-radius: 50px; display: inline-block; margin-bottom: 22px; font-weight: 600; }
+    .pending-popup-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .pending-popup-list { max-height: 180px; overflow-y: auto; text-align: left; margin-bottom: 18px; }
+    .pending-popup-item { display: flex; gap: 10px; align-items: center; padding: 8px 10px; border-radius: var(--radius-sm); border: 1px solid var(--pink-mid); margin-bottom: 7px; background: #fffbe8; }
+    .pending-popup-item-icon { font-size: 1.3rem; }
+    .pending-popup-item-name { font-size: 0.85rem; font-weight: 600; color: var(--text-dark); }
+    .pending-popup-item-meta { font-size: 0.75rem; color: var(--text-soft); }
 
     /* EMPTY STATE */
     .empty-state { text-align: center; padding: 48px 20px; color: var(--text-soft); grid-column: 1 / -1; }
@@ -231,6 +280,19 @@
   <!-- TOAST CONTAINER -->
   <div class="toast-container" id="toastContainer"></div>
 
+  <!-- PENDING TASK POPUP -->
+  <div class="pending-popup-overlay" id="pendingPopupOverlay">
+    <div class="pending-popup">
+      <span class="pending-popup-bell">🔔</span>
+      <h3>⏰ Your Task is Pending!</h3>
+      <div class="pending-popup-list" id="pendingPopupList"></div>
+      <div class="pending-popup-actions">
+        <button class="btn-primary" style="padding:10px 24px;font-size:0.875rem;" onclick="closePendingPopup()">Got it! ✅</button>
+        <button class="modal-cancel" style="padding:10px 24px;" onclick="snoozePopup()">⏱ Snooze 10 min</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ADD TASK MODAL -->
   <div class="modal-overlay" id="addTaskModal">
     <div class="modal">
@@ -251,6 +313,12 @@
           <input type="date" id="taskDate" />
         </div>
         <div class="form-group">
+          <label>⏰ Reminder Time</label>
+          <input type="time" id="taskTime" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group" style="grid-column:1/-1;">
           <label>Category</label>
           <select id="taskCategory">
             <option value="cleaning">🧹 Cleaning</option>
@@ -258,7 +326,7 @@
           </select>
         </div>
       </div>
-      <div class="form-row">
+      <div class="form-row" style="margin-top:0;">
         <div class="form-group">
           <label>Icon (emoji)</label>
           <input type="text" id="taskIcon" placeholder="🧹" maxlength="4" />
@@ -298,6 +366,12 @@
           <input type="date" id="remDate" />
         </div>
         <div class="form-group">
+          <label>⏰ Reminder Time</label>
+          <input type="time" id="remTime" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group" style="grid-column:1/-1;">
           <label>Priority</label>
           <select id="remPriority">
             <option value="high">🔴 High Priority</option>
@@ -329,11 +403,32 @@
         <li><a href="#reminders" data-section="reminders">Reminders</a></li>
         <li><a href="#contact" data-section="contact">Contact</a></li>
       </ul>
-      <div class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu">
-        <span></span><span></span><span></span>
+      <div class="nav-right">
+        <button class="notif-btn" id="notifBtn" onclick="toggleNotifPanel()" title="Notifications">
+          🔔 <span id="notifBtnLabel">Notify Me</span>
+          <span class="notif-badge hidden" id="notifBadge">0</span>
+        </button>
+        <div class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </div>
       </div>
     </nav>
   </header>
+
+  <!-- NOTIFICATION PANEL -->
+  <div class="notif-panel" id="notifPanel">
+    <div class="notif-panel-header">
+      <h4>🔔 Notifications</h4>
+      <button class="notif-panel-close" onclick="toggleNotifPanel()">✕</button>
+    </div>
+    <div class="notif-list" id="notifList">
+      <div class="notif-empty"><span class="notif-empty-icon">🎉</span>No alerts right now!</div>
+    </div>
+    <div class="notif-panel-footer">
+      <button class="notif-clear-btn" onclick="clearAllNotifs()">🗑 Clear All</button>
+      <button class="notif-clear-btn" onclick="requestNotifPermission()" id="notifPermBtn" style="border-color:var(--gold);">📲 Enable Push</button>
+    </div>
+  </div>
 
   <!-- HERO -->
   <section class="hero" id="home">
@@ -588,16 +683,17 @@
     const name = document.getElementById('taskName').value.trim();
     const desc = document.getElementById('taskDesc').value.trim();
     const date = document.getElementById('taskDate').value;
+    const time = document.getElementById('taskTime').value;
     const category = document.getElementById('taskCategory').value;
     const icon = document.getElementById('taskIcon').value.trim() || (category === 'cleaning' ? '🧹' : '🔧');
     const status = document.getElementById('taskStatus').value;
     if (!name) { showToast('Please enter a task name.', 'error'); return; }
     if (!date) { showToast('Please select a due date.', 'error'); return; }
-    const task = { id: nextTaskId++, category, icon, name, desc: desc || 'No description provided.', date, status, progress: status === 'done' ? 100 : 0 };
+    const task = { id: nextTaskId++, category, icon, name, desc: desc || 'No description provided.', date, time: time || '', status, progress: status === 'done' ? 100 : 0 };
     tasks.push(task);
     saveTasks(tasks);
     closeModal('addTaskModal');
-    ['taskName','taskDesc','taskDate','taskIcon'].forEach(id => document.getElementById(id).value = '');
+    ['taskName','taskDesc','taskDate','taskTime','taskIcon'].forEach(id => document.getElementById(id).value = '');
     renderAll();
     showToast(`Task "${name}" added!`, 'success');
   }
@@ -609,15 +705,16 @@
     const title = document.getElementById('remTitle').value.trim();
     const desc = document.getElementById('remDesc').value.trim();
     const date = document.getElementById('remDate').value;
+    const time = document.getElementById('remTime').value;
     const priority = document.getElementById('remPriority').value;
     const icon = document.getElementById('remIcon').value.trim() || '🔔';
     if (!title) { showToast('Please enter a reminder title.', 'error'); return; }
     if (!date) { showToast('Please select a date.', 'error'); return; }
-    const rem = { id: nextRemId++, icon, title, desc: desc || '', date, priority };
+    const rem = { id: nextRemId++, icon, title, desc: desc || '', date, time: time || '', priority };
     reminders.push(rem);
     saveReminders(reminders);
     closeModal('addReminderModal');
-    ['remTitle','remDesc','remDate','remIcon'].forEach(id => document.getElementById(id).value = '');
+    ['remTitle','remDesc','remDate','remTime','remIcon'].forEach(id => document.getElementById(id).value = '');
     renderReminders();
     showToast(`Reminder "${title}" added!`, 'success');
   }
@@ -710,6 +807,13 @@
     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     return `${months[parseInt(m)-1]} ${parseInt(day)}, ${y}`;
   }
+  function formatTime12(timeStr) {
+    if (!timeStr) return '';
+    const [h, m] = timeStr.split(':').map(Number);
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const hour = h % 12 || 12;
+    return `${hour}:${String(m).padStart(2,'0')} ${ampm}`;
+  }
 
   function renderTaskCard(task) {
     const isDone = task.status === 'done';
@@ -719,7 +823,7 @@
       <h3>${task.name}</h3>
       <p>${task.desc}</p>
       <div class="task-meta">
-        <span class="due-date">📅 ${formatDate(task.date)}</span>
+        <span class="due-date">📅 ${formatDate(task.date)}${task.time ? ' · ⏰ ' + formatTime12(task.time) : ''}</span>
         <span class="status ${task.status}">${statusLabel(task.status)}</span>
       </div>
       <div class="progress-wrap"><div class="progress-bar" style="width:0%" data-width="${task.progress}"></div></div>
@@ -776,7 +880,7 @@
         <div class="reminder-header">
           <h4>${rem.title}</h4>
           <div style="display:flex;align-items:center;gap:8px;">
-            <span class="reminder-date">${formatDate(rem.date)}</span>
+            <span class="reminder-date">${formatDate(rem.date)}${rem.time ? ' · ⏰ ' + formatTime12(rem.time) : ''}</span>
             <button class="reminder-dismiss" onclick="dismissReminder(${rem.id})" title="Dismiss">✕</button>
           </div>
         </div>
@@ -894,6 +998,219 @@
     document.getElementById('taskDate').value = today;
     document.getElementById('remDate').value = today;
   });
+
+
+  // ==============================
+  //  NOTIFICATIONS
+  // ==============================
+  let notifItems = [];
+  let notifPermission = Notification.permission || 'default';
+
+  function buildNotifItems() {
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const items = [];
+    tasks.forEach(t => {
+      if (t.status === 'done') return;
+      const due = new Date(t.date);
+      due.setHours(0,0,0,0);
+      const diffDays = Math.round((due - today) / 86400000);
+      if (t.status === 'overdue' || diffDays < 0) {
+        items.push({ id: 'task-' + t.id, icon: t.icon, title: t.name, desc: 'Overdue! Was due ' + formatDate(t.date), time: 'Overdue', urgency: 'overdue' });
+      } else if (diffDays === 0) {
+        items.push({ id: 'task-' + t.id, icon: t.icon, title: t.name, desc: 'Due today — ' + (t.desc.substring(0,60)) + '...', time: 'Due Today', urgency: 'today' });
+      } else if (diffDays <= 3) {
+        items.push({ id: 'task-' + t.id, icon: t.icon, title: t.name, desc: 'Due in ' + diffDays + ' day(s) on ' + formatDate(t.date), time: 'In ' + diffDays + ' day(s)', urgency: 'soon' });
+      }
+    });
+    reminders.forEach(r => {
+      const due = new Date(r.date);
+      due.setHours(0,0,0,0);
+      const diffDays = Math.round((due - today) / 86400000);
+      if (diffDays <= 1 && diffDays >= -1) {
+        items.push({ id: 'rem-' + r.id, icon: r.icon, title: r.title, desc: diffDays < 0 ? 'Overdue reminder!' : diffDays === 0 ? 'Reminder due today' : 'Reminder tomorrow', time: diffDays === 0 ? 'Today' : diffDays < 0 ? 'Overdue' : 'Tomorrow', urgency: diffDays <= 0 ? 'overdue' : 'today' });
+      }
+    });
+    return items;
+  }
+
+  function updateNotifPanel() {
+    notifItems = buildNotifItems();
+    const badge = document.getElementById('notifBadge');
+    const list = document.getElementById('notifList');
+    if (notifItems.length > 0) {
+      badge.textContent = notifItems.length;
+      badge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden');
+    }
+    if (notifItems.length === 0) {
+      list.innerHTML = '<div class="notif-empty"><span class="notif-empty-icon">🎉</span>All clear — no urgent tasks!</div>';
+      return;
+    }
+    const urgencyColor = { overdue: '#e74c3c', today: '#e67e22', soon: '#f39c12' };
+    const urgencyLabel = { overdue: '🔴 Overdue', today: '🟠 Due Today', soon: '🟡 Coming Soon' };
+    list.innerHTML = notifItems.map(n => `
+      <div class="notif-item ${n.urgency}">
+        <div class="notif-item-icon">${n.icon}</div>
+        <div class="notif-item-body">
+          <div class="notif-item-title">${n.title}</div>
+          <div class="notif-item-desc">${n.desc}</div>
+          <div class="notif-item-time" style="color:${urgencyColor[n.urgency]}">${urgencyLabel[n.urgency]} · ${n.time}</div>
+        </div>
+      </div>`).join('');
+  }
+
+  function toggleNotifPanel() {
+    const panel = document.getElementById('notifPanel');
+    panel.classList.toggle('open');
+    if (panel.classList.contains('open')) updateNotifPanel();
+  }
+
+  document.addEventListener('click', e => {
+    const panel = document.getElementById('notifPanel');
+    const btn = document.getElementById('notifBtn');
+    if (!panel.contains(e.target) && !btn.contains(e.target)) panel.classList.remove('open');
+  });
+
+  function clearAllNotifs() {
+    document.getElementById('notifList').innerHTML = '<div class="notif-empty"><span class="notif-empty-icon">✅</span>All notifications cleared!</div>';
+    document.getElementById('notifBadge').classList.add('hidden');
+  }
+
+  async function requestNotifPermission() {
+    if (!('Notification' in window)) {
+      showToast('Your browser does not support push notifications.', 'error');
+      return;
+    }
+    const permission = await Notification.requestPermission();
+    notifPermission = permission;
+    if (permission === 'granted') {
+      document.getElementById('notifBtn').classList.add('enabled');
+      document.getElementById('notifBtnLabel').textContent = 'Notifications On';
+      document.getElementById('notifPermBtn').textContent = '✅ Push Enabled';
+      showToast('Push notifications enabled! 🔔', 'success');
+      sendPushForUrgent();
+    } else {
+      showToast('Notification permission denied.', 'error');
+    }
+  }
+
+  function sendPushForUrgent() {
+    if (notifPermission !== 'granted') return;
+    const urgent = buildNotifItems().filter(n => n.urgency === 'overdue' || n.urgency === 'today');
+    if (urgent.length === 0) return;
+    urgent.slice(0, 3).forEach(n => {
+      try {
+        new Notification('🏠 Home Reminder: ' + n.title, {
+          body: n.desc,
+          icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🏠</text></svg>',
+          tag: n.id
+        });
+      } catch(e) {}
+    });
+  }
+
+  // Check for permission already granted on load
+  if ('Notification' in window && Notification.permission === 'granted') {
+    notifPermission = 'granted';
+    document.getElementById('notifBtn').classList.add('enabled');
+    document.getElementById('notifBtnLabel').textContent = 'Notifications On';
+    document.getElementById('notifPermBtn').textContent = '✅ Push Enabled';
+  }
+
+  // Refresh badge count whenever renderAll runs
+  const _origRenderAll = renderAll;
+  function renderAll() {
+    _origRenderAll();
+    setTimeout(updateNotifPanel, 100);
+  }
+
+  // Periodic check every 5 minutes
+  setInterval(() => { updateNotifPanel(); sendPushForUrgent(); }, 5 * 60 * 1000);
+
+  // ==============================
+  //  PENDING TASK POPUP (time-based)
+  // ==============================
+  let snoozedUntil = 0;
+  let shownPopupKeys = new Set(JSON.parse(sessionStorage.getItem('shownPopupKeys') || '[]'));
+
+  function getPopupKey(item, dateStr, timeStr) {
+    return item.id + '_' + dateStr + '_' + (timeStr || 'notime');
+  }
+
+  function buildTimedAlerts() {
+    const now = new Date();
+    const todayStr = now.toISOString().slice(0,10);
+    const nowMins = now.getHours() * 60 + now.getMinutes();
+    const alerts = [];
+
+    tasks.forEach(t => {
+      if (t.status === 'done') return;
+      if (!t.time) return;
+      const [h, m] = t.time.split(':').map(Number);
+      const taskMins = h * 60 + m;
+      // Fire if today's date matches and current time is within the task's minute
+      if (t.date === todayStr && nowMins === taskMins) {
+        const key = getPopupKey(t, t.date, t.time);
+        if (!shownPopupKeys.has(key)) alerts.push({ key, icon: t.icon, name: t.name, desc: t.desc, time: t.time, type: 'task' });
+      }
+    });
+
+    reminders.forEach(r => {
+      if (!r.time) return;
+      const [h, m] = r.time.split(':').map(Number);
+      const remMins = h * 60 + m;
+      if (r.date === todayStr && nowMins === remMins) {
+        const key = getPopupKey(r, r.date, r.time);
+        if (!shownPopupKeys.has(key)) alerts.push({ key, icon: r.icon, name: r.title, desc: r.desc, time: r.time, type: 'reminder' });
+      }
+    });
+
+    return alerts;
+  }
+
+  function showPendingPopup(alerts) {
+    const list = document.getElementById('pendingPopupList');
+    list.innerHTML = alerts.map(a => `
+      <div class="pending-popup-item">
+        <div class="pending-popup-item-icon">${a.icon}</div>
+        <div>
+          <div class="pending-popup-item-name">${a.name}</div>
+          <div class="pending-popup-item-meta">⏰ ${formatTime12(a.time)} · ${a.desc ? a.desc.substring(0,60) + (a.desc.length > 60 ? '…' : '') : ''}</div>
+        </div>
+      </div>`).join('');
+    document.getElementById('pendingPopupOverlay').classList.add('open');
+    alerts.forEach(a => {
+      shownPopupKeys.add(a.key);
+      // Push notification too
+      if (notifPermission === 'granted') {
+        try { new Notification('⏰ Task Pending: ' + a.name, { body: a.desc || 'Your scheduled task is due now!', tag: a.key }); } catch(e) {}
+      }
+    });
+    sessionStorage.setItem('shownPopupKeys', JSON.stringify([...shownPopupKeys]));
+  }
+
+  function closePendingPopup() {
+    document.getElementById('pendingPopupOverlay').classList.remove('open');
+  }
+
+  function snoozePopup() {
+    snoozedUntil = Date.now() + 10 * 60 * 1000;
+    closePendingPopup();
+    showToast('⏱ Snoozed for 10 minutes.', 'info');
+  }
+
+  function checkTimedPopups() {
+    if (Date.now() < snoozedUntil) return;
+    const alerts = buildTimedAlerts();
+    if (alerts.length > 0) showPendingPopup(alerts);
+  }
+
+  // Check every 30 seconds
+  setInterval(checkTimedPopups, 30 * 1000);
+  // Also check on load
+  setTimeout(checkTimedPopups, 2000);
 
   // Also call renderAll immediately (in case DOMContentLoaded already fired)
   if (document.readyState !== 'loading') renderAll();
